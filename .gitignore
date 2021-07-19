@@ -1,0 +1,6 @@
+virtual/
+.vscode/
+media/
+*.pyc
+dbsqlite
+__pycache__/
