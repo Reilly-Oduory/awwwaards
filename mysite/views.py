@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib import messages
 from .forms import RegistrationForm
+from .serializers import ProfileSerializer, ProjectSerializer
+from .models import User, Profile, Project, Review
 
 # Create your views here.
 # auth views
@@ -53,8 +55,9 @@ def apiOverview(request):
     api_urls = {
         # profiles
         'profile-list' : '/profiles/',
-        'user-specific-profile' : '/user/profile/',
-        'update-profile' : '/<user>/<pk>/update/',
+        'user-specific-profile' : '/<user>/profile/',
+        'create-profile' : '/create-profile/',
+        'update-profile' : '/update-profile/',
 
         # projects
         'project-list' : '/projects/',
@@ -66,6 +69,51 @@ def apiOverview(request):
 
     }
     return Response(api_urls)
+
+@api_view(['GET'])
+def ProfileList(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileSerializer(profiles, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def UserProfile(request, user_id):
+    user = User.objects.filter(id=user_id).first()
+    profile = Profile.objects.filter(user=user).first()
+    serializer = ProfileSerializer(profile)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def CreateUserProfile(request):
+    serializer = ProfileSerializer(data=request.data)
+    if serializer.is_valid():
+        obj = serializer.save(user=request.user)
+    
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def UpdateUserProfile(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    serializer = ProfileSerializer(instance=profile, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def ProjectList(request):
+    projects = Project.objects.all()
+    serializer = ProjectSerializer(projects, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def UserProjects(request):
+    projects = Project.objects.filter(user=request.user).all()
+    serializer = ProjectSerializer(projects, many=True)
+
+    return Response(serializer.data)
+
+
 
 # user views
 def index(request):

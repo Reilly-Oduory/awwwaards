@@ -11,7 +11,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
 class Profile(models.Model):
     fullname = models.CharField(max_length=45, null=True)
     profile_pic = models.ImageField(upload_to = 'profile_photos/', null=True, blank=True)
