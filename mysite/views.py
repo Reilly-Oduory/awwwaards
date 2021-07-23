@@ -87,7 +87,7 @@ def UserProfile(request, user_id):
 def CreateUserProfile(request):
     serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
-        obj = serializer.save(user=request.user)
+        serializer.save(user=request.user)
     
     return Response(serializer.data)
 
@@ -112,6 +112,37 @@ def UserProjects(request):
     serializer = ProjectSerializer(projects, many=True)
 
     return Response(serializer.data)
+
+@api_view(['GET'])
+def SingleProject(request, pk):
+    project = Project.objects.filter(id=pk).first()
+    serializer = ProjectSerializer(project)
+
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def CreateProject(request):
+    serializer = ProjectSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+    
+    return Response(serializer.data) 
+
+@api_view(['POST'])
+def UpdateProject(request, pk):
+    project = Project.objects.filter(id=pk).first()
+    serializer = ProjectSerializer(instance=project, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def DeleteProject(request, pk):
+    project = Project.objects.filter(id=pk).first()
+    project.delete()
+
+    return Response("Project deleted")
 
 
 
