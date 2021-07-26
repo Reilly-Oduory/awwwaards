@@ -154,3 +154,41 @@ def index(request):
     }
 
     return render(request, 'index.html', context)
+
+@login_required(login_url='/login/')
+def projectView(request, pk):
+    project = Project.objects.filter(id=pk).first()
+    context = {
+        "project":project
+    }
+    return render(request, 'project/project-view.html', context)
+
+@login_required(login_url='/login/')
+def reviewProject(request, project_id):
+    context = {}
+
+    return render(request, 'review/review.html', context)
+
+@login_required(login_url='/login/')
+def editProject(request, project_id):
+    context = {}
+
+    return render(request, 'personal/update-project.html', context)
+
+@login_required(login_url='/login/')
+def createProfile(request):
+    context = {}
+
+    return render(request, 'profile/create-profile.html', context)
+
+@login_required(login_url='/login/')
+def updateProfile(request):
+    context = {}
+
+    return render(request, 'profile/update-profile.html', context)
+
+@login_required(login_url='/login/')
+def deleteProject(request):
+    context = {}
+
+    return render(request, 'personal/delete-project.html', context)
