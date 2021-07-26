@@ -24,9 +24,18 @@ class Project(models.Model):
     url = models.CharField(max_length=60, null=True)
     user = models.ForeignKey(User, on_delete=CASCADE, null=True)
 
+
+rate_choices = (
+    ('1', '1'),
+    ('2', '2'),
+    ('3', '3'),
+    ('4', '4'),
+    ('5', '5'),
+)
+
 class Review(models.Model):
     title = models.CharField(max_length=30, null=True)
     content = models.TextField(null=True)
-    rating = models.CharField(max_length=1, null=True)
+    rating = models.CharField(max_length=1, null=True, choices=rate_choices, default='1')
     user = models.ForeignKey(User, on_delete=CASCADE, null=True)
     project = models.ForeignKey(Project, on_delete=CASCADE, null=True)
