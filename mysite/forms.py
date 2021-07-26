@@ -32,7 +32,7 @@ class UpdateProfileForm(forms.ModelForm):
     profile_pic = forms.ImageField.widget.attrs={'class':"form-control"}
 
 
-class CreateProject(forms.ModelForm):
+class CreateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         exclude = ['user']
@@ -43,7 +43,7 @@ class CreateProject(forms.ModelForm):
 
 
 
-class UJpdateProject(forms.ModelForm):
+class UpdateProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['description', 'url']
@@ -53,7 +53,7 @@ class UJpdateProject(forms.ModelForm):
 
 
 
-class ReviewProject(forms.ModelForm):
+class ReviewProjectForm(forms.ModelForm):
     class Meta:
         model = Review
         exclude = ['user', 'project']

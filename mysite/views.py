@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib import messages
-from .forms import RegistrationForm
+from .forms import RegistrationForm, CreateProfileForm, UpdateProfileForm, CreateProjectForm, UpdateProjectForm, ReviewProjectForm
 from .serializers import ProfileSerializer, ProjectSerializer
 from .models import User, Profile, Project, Review
 
@@ -156,45 +156,116 @@ def index(request):
     return render(request, 'index.html', context)
 
 @login_required(login_url='/login/')
+def profileView(request):
+    profile = Profile.objects.filter(user=request.user).first()
+    projects = Project.objects.filter(user=request.user).all()
+    context = {
+        "profile":profile,
+        "projects":projects,
+    }
+
+    return render(request, 'profile/profile.html', context)
+
+@login_required(login_url='/login/')
 def projectView(request, pk):
     project = Project.objects.filter(id=pk).first()
+    reviews = Review.objects.filter(project=pk).all()
     context = {
-        "project":project
+        "project":project,
+        "reviews":reviews
     }
     return render(request, 'project/project-view.html', context)
 
 @login_required(login_url='/login/')
 def createProject(request):
-    context = {}
+    form = CreateProjectForm()
+    if request.method == 'POST':
+        form = CreateProjectForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return redirect(f'/profile/')
+
+    context = {"form":form}
 
     return render(request, 'personal/create-project.html')
 
 @login_required(login_url='/login/')
 def reviewProject(request, project_id):
-    context = {}
+    project = Project.objects.filter(id=project_id).first()
+    form = ReviewProjectForm()
+    if request.method == 'POST':
+        form = ReviewProjectForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.project = project
+            obj.user = request.user
+            obj.save()
+            return redirect(f'/project/{project_id}/')
+
+    context = {
+        "form":form,
+        "project":project
+    }
 
     return render(request, 'review/review.html', context)
 
 @login_required(login_url='/login/')
 def updateProject(request, project_id):
-    context = {}
+    project = Project.objects.get(id=project_id)
+    form = UpdateProjectForm()
+    if request.method == 'POST':
+        form = UpdateProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/project/{project_id}/')
+
+    context = {
+        "form":form,
+        "project":project
+    }
 
     return render(request, 'personal/update-project.html', context)
 
 @login_required(login_url='/login/')
 def createProfile(request):
-    context = {}
+    form = CreateProfileForm( )
+    if request.method == 'POST':
+        form = CreateProfileForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return redirect(f'/profile/')
+    context = {
+        "form":form
+    }
 
     return render(request, 'profile/create-profile.html', context)
 
 @login_required(login_url='/login/')
 def updateProfile(request):
-    context = {}
+    profile = Profile.objects.get(user=request.user)
+    form = UpdateProfileForm()
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/profile/')
+
+    context = {
+        "form":form,
+    }
 
     return render(request, 'profile/update-profile.html', context)
 
 @login_required(login_url='/login/')
 def deleteProject(request, project_id):
-    context = {}
+    project = Project.objects.get(id=project_id)
+    project.del_project()
+    context = {
+        "project":project
+    }
 
     return render(request, 'personal/delete-project.html', context)

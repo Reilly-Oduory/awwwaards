@@ -27,6 +27,7 @@ urlpatterns = [
     # user
     path('', views.index, name='home'),
     #profile
+    path('profile/', views.profileView, name='profile'),
     path('create/profile', views.createProfile, name='create-profile'),
     path('update/profile', views.updateProfile, name='update-profile'),
 

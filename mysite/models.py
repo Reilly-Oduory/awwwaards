@@ -24,6 +24,8 @@ class Project(models.Model):
     url = models.CharField(max_length=60, null=True)
     user = models.ForeignKey(User, on_delete=CASCADE, null=True)
 
+    def del_project(self):
+        self.delete()
 
 rate_choices = (
     ('1', '1'),
