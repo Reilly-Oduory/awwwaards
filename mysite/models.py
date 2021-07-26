@@ -16,7 +16,7 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to = 'profile_photos/', null=True, blank=True)
     bio = models.TextField(null=True)
     d_o_b = models.DateField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=CASCADE, null=True)
 
 class Project(models.Model):
     project_pic = models.ImageField(upload_to = 'project_photos/', null=True, blank=True)
@@ -27,4 +27,6 @@ class Project(models.Model):
 class Review(models.Model):
     title = models.CharField(max_length=30, null=True)
     content = models.TextField(null=True)
+    rating = models.CharField(max_length=1, null=True)
     user = models.ForeignKey(User, on_delete=CASCADE, null=True)
+    project = models.ForeignKey(Project, on_delete=CASCADE, null=True)
