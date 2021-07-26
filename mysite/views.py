@@ -149,8 +149,10 @@ def DeleteProject(request, pk):
 # user views
 def index(request):
     title = 'Nice test'
+    projects = Project.objects.all()
     context = {
         "title":title,
+        "projects":projects
     }
 
     return render(request, 'index.html', context)
@@ -180,7 +182,7 @@ def projectView(request, pk):
 def createProject(request):
     form = CreateProjectForm()
     if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
+        form = CreateProjectForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user
@@ -189,7 +191,7 @@ def createProject(request):
 
     context = {"form":form}
 
-    return render(request, 'personal/create-project.html')
+    return render(request, 'personal/create-project.html', context)
 
 @login_required(login_url='/login/')
 def reviewProject(request, project_id):
@@ -216,7 +218,7 @@ def updateProject(request, project_id):
     project = Project.objects.get(id=project_id)
     form = UpdateProjectForm()
     if request.method == 'POST':
-        form = UpdateProjectForm(request.POST, instance=project)
+        form = UpdateProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
             return redirect(f'/project/{project_id}/')
@@ -232,7 +234,7 @@ def updateProject(request, project_id):
 def createProfile(request):
     form = CreateProfileForm( )
     if request.method == 'POST':
-        form = CreateProfileForm(request.POST)
+        form = CreateProfileForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.user = request.user
@@ -249,7 +251,7 @@ def updateProfile(request):
     profile = Profile.objects.get(user=request.user)
     form = UpdateProfileForm()
     if request.method == 'POST':
-        form = UpdateProfileForm(request.POST, instance=profile)
+        form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect(f'/profile/')
@@ -264,8 +266,5 @@ def updateProfile(request):
 def deleteProject(request, project_id):
     project = Project.objects.get(id=project_id)
     project.del_project()
-    context = {
-        "project":project
-    }
 
-    return render(request, 'personal/delete-project.html', context)
+    return redirect(f'/profile/')

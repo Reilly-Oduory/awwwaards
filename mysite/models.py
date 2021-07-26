@@ -19,6 +19,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE, null=True)
 
 class Project(models.Model):
+    project_name = models.CharField(max_length=30, null=True)
     project_pic = models.ImageField(upload_to = 'project_photos/', null=True, blank=True)
     description = models.TextField(null=True)
     url = models.CharField(max_length=60, null=True)
