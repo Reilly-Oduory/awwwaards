@@ -164,6 +164,12 @@ def projectView(request, pk):
     return render(request, 'project/project-view.html', context)
 
 @login_required(login_url='/login/')
+def createProject(request):
+    context = {}
+
+    return render(request, 'personal/create-project.html')
+
+@login_required(login_url='/login/')
 def reviewProject(request, project_id):
     context = {}
 
