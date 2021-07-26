@@ -176,7 +176,7 @@ def reviewProject(request, project_id):
     return render(request, 'review/review.html', context)
 
 @login_required(login_url='/login/')
-def editProject(request, project_id):
+def updateProject(request, project_id):
     context = {}
 
     return render(request, 'personal/update-project.html', context)
@@ -194,7 +194,7 @@ def updateProfile(request):
     return render(request, 'profile/update-profile.html', context)
 
 @login_required(login_url='/login/')
-def deleteProject(request):
+def deleteProject(request, project_id):
     context = {}
 
     return render(request, 'personal/delete-project.html', context)
