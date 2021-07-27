@@ -1,0 +1,103 @@
+body {
+    background: #1f1f1f;
+    color: aliceblue;
+}
+
+body p {
+    color: rgb(220, 250, 250);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vh;
+}
+
+.item {
+    cursor: pointer;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item h4 {
+    color: rgb(182, 250, 221);
+}
+
+.project .image img {
+    width: 100%;
+    height: 40vh;
+    object-fit:scale-down;
+
+}
+
+.project .details h5 {
+    color: rgb(170, 243, 213);
+}
+
+.project .details p {
+    color: rgb(105, 167, 138);
+}
+
+.reviews h5 {
+    color: rgb(170, 243, 213);
+}
+
+.reviews p {
+    color: rgb(179, 216, 213);
+}
+
+.reviews small {
+    color: rgb(109, 211, 202);
+}
+
+.reviews h6 {
+    font-size: 0.7rem;
+}
+
+.small-right {
+    float: right;
+}
+
+.float-clear {
+    clear: both;
+}
+
+.profile-img img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.form-dark input[type="text"],
+.form-dark textarea,
+.form-dark select {
+    background: rgb(88, 88, 88);
+    color: chartreuse;
+}
+
+.form-dark input[type="text"]:active,
+.form-dark textarea:active,
+.form-dark select:active {
+    background: rgb(88, 88, 88);
+    color: chartreuse;
+}
+
+.form-dark input[type="text"]:focus,
+.form-dark textarea:focus,
+.form-dark select:focus {
+    background: rgb(88, 88, 88);
+    color: chartreuse;
+    border-color: chartreuse;
+    box-shadow: none;
+}
+
+.form-dark input[type="text"]::after,
+.form-dark textarea::after,
+.form-dark select::after {
+    background: rgb(88, 88, 88);
+    color: chartreuse;
+}

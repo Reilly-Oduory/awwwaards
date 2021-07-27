@@ -1,3 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">REILLY'S AWWWARDS CLONE</h1>
+    <p class="my-0">This is a site for rating programming projects.</p>
+    <p class="my-0">Beginners may post their work here to recieve feedback.</p>
+    <p class="my-0">Helps people find your work and know what most people think of it.</p>
+    <small class="text-muted">Build the programming community</small>
+    <hr>
+    <div class="wrapper">
+        {% for project in projects %}
+            <div class="item" onclick="location.href='/project/{{project.id}}';">
+                <img src="{{ project.project_pic.url }}" alt="">
+                <h4>{{ project.project_name }}</h4>
+            </div>      
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
 <h1>{{ title }}</h1>
 {% for project in projects %}
   <h1>{{ project.project_name }}</h1>

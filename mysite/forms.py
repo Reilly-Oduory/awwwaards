@@ -20,7 +20,8 @@ class CreateProfileForm(forms.ModelForm):
     
     fullname = forms.CharField(widget=forms.TextInput(attrs={'class':"form-control", 'placeholder':"Fullname"}))
     profile_pic = forms.ImageField.widget.attrs={'class':"form-control"}
-    d_o_b = forms.DateField(widget=forms.DateInput(attrs={'class':"form-control", 'placeholder':"Your Date of Birth"}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class':"form-control", 'placeholder':"Bio"}))
+    d_o_b = forms.DateField(widget=forms.DateInput(attrs={'class':"form-control", 'placeholder':"Your Date of Birth (yyyy-mm-dd)"}))
 
 
 class UpdateProfileForm(forms.ModelForm):
@@ -29,7 +30,8 @@ class UpdateProfileForm(forms.ModelForm):
         exclude = ['user', 'd_o_b']
 
     fullname = forms.CharField(widget=forms.TextInput(attrs={'class':"form-control", 'placeholder':"Fullname"}))
-    profile_pic = forms.ImageField.widget.attrs={'class':"form-control"}
+    profile_pic = forms.ImageField.widget.attrs={'class':"form-control", 'placeholder':"Bio"}
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class':"form-control"}))
 
 
 class CreateProjectForm(forms.ModelForm):
@@ -37,6 +39,7 @@ class CreateProjectForm(forms.ModelForm):
         model = Project
         exclude = ['user']
 
+    project_name = forms.CharField(widget=forms.TextInput(attrs={'class':"form-control", 'placeholder':"Project Name"}))
     project_pic = forms.ImageField.widget.attrs={'class':"form-control"}
     description = forms.CharField(widget=forms.Textarea(attrs={'class':"form-control", 'placeholder':"Project Description"}))
     url = forms.CharField(widget=forms.TextInput(attrs={'class':"form-control", 'placeholder':"Project Url"}))
@@ -57,3 +60,7 @@ class ReviewProjectForm(forms.ModelForm):
     class Meta:
         model = Review
         exclude = ['user', 'project']
+
+    title = forms.CharField(widget=forms.TextInput(attrs={'class':"form-control", 'placeholder':"Review Title"}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class':"form-control", 'placeholder':"Review Content"}))
+    rating = forms.ChoiceField.widget.attrs={'class':"form-select"}

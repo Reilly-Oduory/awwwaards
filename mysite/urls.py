@@ -36,5 +36,5 @@ urlpatterns = [
     path('create/project/', views.createProject, name='create-project'),
     path('update/project/<project_id>', views.updateProject, name='update-project'),
     path('delete/project/<project_id>', views.deleteProject, name='delete-project'),
-    path('create/project/review/', views.reviewProject, name='review-project')
+    path('create/project/review/<project_id>', views.reviewProject, name='review-project')
 ]
