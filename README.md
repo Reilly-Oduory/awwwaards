@@ -31,3 +31,7 @@ Login to be able to do everything apart from the site preview.
 
 ### Author
 [Reilly](https://github.com/Reilly-Oduory)
+
+## challenges
+ - Deploying
+ - Token authentication of api
