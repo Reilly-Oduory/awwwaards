@@ -3,3 +3,4 @@ virtual/
 *.pyc
 dbsqlite
 __pycache__/
+db.sqlite3
